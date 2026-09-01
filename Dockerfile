@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 # Set the PocketBase version you want to use
-ARG PB_VERSION=0.22.18 
+ARG PB_VERSION=0.40.1
 
 # Install dependencies
 RUN apk add --no-cache unzip ca-certificates curl
