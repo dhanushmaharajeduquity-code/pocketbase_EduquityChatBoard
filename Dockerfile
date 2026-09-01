@@ -1,21 +1,22 @@
 FROM alpine:latest
 
-ARG PB_VERSION=0.29.4
+ARG PB_VERSION=0.40.1
 
 RUN apk add --no-cache \
     ca-certificates \
-    unzip \
-    wget
+    unzip
 
-RUN wget -O /tmp/pocketbase.zip \
-    https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip \
-    && unzip /tmp/pocketbase.zip -d /pocketbase \
-    && rm /tmp/pocketbase.zip
+ADD https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip /tmp/pb.zip
 
-WORKDIR /pocketbase
+RUN unzip /tmp/pb.zip -d /pb/ \
+    && rm /tmp/pb.zip
 
-COPY pb_migrations /pocketbase/pb_migrations
+# Copy migrations if they exist
+COPY ./pb_migrations /pb/pb_migrations
+
+# Copy hooks if they exist
+# COPY ./pb_hooks /pb/pb_hooks
 
 EXPOSE 8080
 
-CMD ["/pocketbase/pocketbase", "serve", "--http=0.0.0.0:8080"]
+CMD ["/pb/pocketbase", "serve", "--http=0.0.0.0:8080"]
