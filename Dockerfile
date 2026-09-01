@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 # Set the exact version you requested
-ARG PB_VERSION=0.40.0 
+ARG PB_VERSION=0.40.1 
 
 # Install dependencies
 RUN apk add --no-cache unzip ca-certificates curl
