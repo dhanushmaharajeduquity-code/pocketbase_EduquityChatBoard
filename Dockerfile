@@ -1,19 +1,20 @@
 FROM alpine:latest
 
-# Set the PocketBase version you want to use
-ARG PB_VERSION=0.40.1
+# Set the exact version you requested
+ARG PB_VERSION=0.40.0 
 
 # Install dependencies
 RUN apk add --no-cache unzip ca-certificates curl
 
-# Download and unzip PocketBase
+# Download the LINUX version (NOT Windows). Render requires Linux binaries.
 RUN curl -L https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip -o /tmp/pb.zip
+
+# Unzip and make it executable
 RUN unzip /tmp/pb.zip -d /pb/
 RUN chmod +x /pb/pocketbase
 
-# Expose the default port
+# Expose the port
 EXPOSE 8080
 
-# Render injects a PORT environment variable. 
-# We tell PocketBase to listen on that port, falling back to 8080 if not set.
+# Start PocketBase
 CMD ["/bin/sh", "-c", "/pb/pocketbase serve --http=0.0.0.0:${PORT:-8080}"]
