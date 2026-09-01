@@ -6,7 +6,8 @@ RUN apk add --no-cache \
     unzip \
     ca-certificates
 
-ADD https://github.com/dhanushmaharajeduquity-code/pocketbase_EduquityChatBoard/blob/main/pocketbase_0.40.1_windows_amd64.zip
+ADD https://github.com/pocketbase/pocketbase/releases/download/v0.40.1/pocketbase_0.40.1_windows_amd64.zip
+
 RUN unzip /tmp/pb.zip -d /pb/ \
     && rm /tmp/pb.zip
 
